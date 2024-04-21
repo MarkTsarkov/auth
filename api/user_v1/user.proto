@@ -40,7 +40,7 @@ message UpdateUserInfo {
 }
 
 message CreateRequest {
-    UserInfo info = 1;
+    User info = 1;
     string password_confirm = 2;
 }
 

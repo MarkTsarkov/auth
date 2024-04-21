@@ -13,14 +13,22 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-const grpcPort = 50052
+const grpcPort = 50051
 
 type server struct {
 	desc.UnimplementedUserV1Server
 }
 
+func (s* server) Create (ctx context.Context, req *desc.CreateRequest) (*desc.CreateResponse, error) {
+	log.Printf("User id: %v", req.Info)
+
+	return &desc.CreateResponse{
+		Id: req.Info.Id,
+	}, nil
+}
+
 func (s* server) Get (ctx context.Context, req *desc.GetRequest) (*desc.GetResponse, error) {
-	log.Printf("User id: #{req.GetId()}")
+	log.Printf("User id: %v", req.Id)
 
 	return &desc.GetResponse{
 		User: &desc.User{
@@ -33,6 +41,20 @@ func (s* server) Get (ctx context.Context, req *desc.GetRequest) (*desc.GetRespo
 			CreatedAt: timestamppb.New(gofakeit.Date()),
 			UpdatedAt: timestamppb.New(gofakeit.Date()),
 		},
+	}, nil
+}
+
+func (s* server) Update (ctx context.Context, req *desc.UpdateRequest) (*desc.UpdateResponse, error) {
+	log.Printf("User id: %v", req.Id)
+
+	return &desc.UpdateResponse{
+	}, nil
+}
+
+func (s* server) Delete (ctx context.Context, req *desc.DeleteRequest) (*desc.DeleteResponse, error) {
+	log.Printf("User id: %v", req.Id)
+
+	return &desc.DeleteResponse{
 	}, nil
 }
 
