@@ -58,6 +58,11 @@ func (s* server) Delete (ctx context.Context, req *desc.DeleteRequest) (*desc.De
 	}, nil
 }
 
+const (
+	dbDSN = "host=localhost port=54321 dbname=users user=admin password=admin"
+)
+
+
 func main() {
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", grpcPort))
 	if err != nil {
