@@ -1,0 +1,28 @@
+version: "3"
+
+volumes: 
+  postgres_volume:
+
+services: 
+  pg:
+    image: postgres:14-alpine3.17
+    env_file: .env
+    environment:
+      - "POSTGRES_DB=${PG_DATABASE_NAME}"
+      - "POSTGRES_USER=${PG_DATABASE_USER}"
+      - "POSTGRES_PASSWORD=${PG_DATABASE_PASSWORD}"
+    ports:
+      - "${PG_PORT}:5432"
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+
+  migrator:
+    env_file: .env
+    build: 
+      context: .
+      dockerfile: migration.Dockerfile
+    restart: on-failure
+    environment:
+      DB_HOST: pg
+
+
